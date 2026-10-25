@@ -1,0 +1,229 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f5f7fb">
+  <title>Student Life Solver | Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <aside class="sidebar" id="sidebar">
+    <a class="brand" href="#dashboard">
+      <span class="brand-icon">S</span>
+      <span>Student<span class="brand-light">Life</span></span>
+    </a>
+
+    <p class="nav-label">WORKSPACE</p>
+    <nav>
+      <a class="nav-link active" href="#dashboard">▦ <span>Dashboard</span></a>
+      <a class="nav-link" href="#attendance">◷ <span>Attendance</span></a>
+      <a class="nav-link" href="#assignments">▤ <span>Assignments</span></a>
+      <a class="nav-link" href="#expenses">₹ <span>Expenses</span></a>
+      <a class="nav-link" href="#study">◉ <span>Study Planner</span></a>
+    </nav>
+
+    <div class="sidebar-note">
+      <span class="note-icon">✦</span>
+      <h3>Small steps. Big results.</h3>
+      <p>Build better habits, one day at a time.</p>
+    </div>
+    <p class="sidebar-footer">STUDENT LIFE SOLVER · v2.0</p>
+  </aside>
+
+  <main class="main-content" id="dashboard">
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="menu-btn" id="menuBtn" aria-label="Toggle navigation">☰</button>
+        <div>
+          <p class="eyebrow">YOUR PERSONAL WORKSPACE</p>
+          <h1>Student Dashboard</h1>
+        </div>
+      </div>
+      <div class="topbar-right">
+        <span class="date-chip" id="todayDate"></span>
+        <span class="avatar">S</span>
+      </div>
+    </header>
+
+    <section class="welcome">
+      <div>
+        <p class="eyebrow welcome-eyebrow">YOUR PROGRESS STARTS HERE</p>
+        <h2>Stay focused. Stay organised. <span>✦</span></h2>
+        <p>Keep track of your academics, money and daily learning.</p>
+      </div>
+      <div class="welcome-decoration">✦</div>
+    </section>
+
+    <section class="stats-grid" aria-label="Summary">
+      <article class="stat-card">
+        <div class="stat-top"><span>Attendance</span><span class="stat-icon purple">◷</span></div>
+        <div class="stat-number" id="attendanceSummary">—</div>
+        <p class="stat-caption" id="attendanceCaption">Your current attendance</p>
+        <div class="progress-track"><div class="progress-fill purple-fill" id="attendanceProgress"></div></div>
+      </article>
+      <article class="stat-card">
+        <div class="stat-top"><span>Pending assignments</span><span class="stat-icon orange">▤</span></div>
+        <div class="stat-number" id="pendingSummary">0</div>
+        <p class="stat-caption">Tasks still to complete</p>
+        <p class="stat-foot" id="assignmentCaption">Stay on top of deadlines</p>
+      </article>
+      <article class="stat-card">
+        <div class="stat-top"><span>Total expenses</span><span class="stat-icon green">₹</span></div>
+        <div class="stat-number" id="expenseSummary">₹0</div>
+        <p class="stat-caption">All expenses recorded</p>
+        <p class="stat-foot">Track where your money goes</p>
+      </article>
+      <article class="stat-card">
+        <div class="stat-top"><span>Study time</span><span class="stat-icon blue">◉</span></div>
+        <div class="stat-number" id="studySummary">0h</div>
+        <p class="stat-caption">Completed study sessions</p>
+        <p class="stat-foot" id="studyCaption">Make time to learn daily</p>
+      </article>
+    </section>
+
+    
+<article class="panel" id="attendance">
+  <div class="panel-heading">
+    <div>
+      <p class="eyebrow">ACADEMICS</p>
+      <h2>Semester Attendance Planner</h2>
+    </div>
+    <span class="panel-icon purple">◷</span>
+  </div>
+
+  <p class="panel-description">
+    Track your semester attendance and plan how to reach 75%.
+  </p>
+
+  <form id="attendanceForm" class="stack-form">
+    <label>Total lectures in semester
+      <input type="number" id="semesterTotalLectures"
+        min="1" step="1" placeholder="e.g. 120" required>
+    </label>
+
+    <div class="form-grid">
+      <label>Lectures conducted
+        <input type="number" id="totalLectures"
+          min="0" step="1" placeholder="e.g. 60" required>
+      </label>
+
+      <label>Lectures attended
+        <input type="number" id="attendedLectures"
+          min="0" step="1" placeholder="e.g. 42" required>
+      </label>
+    </div>
+
+    <button class="btn btn-primary full-width" type="submit">
+      Calculate attendance →
+    </button>
+  </form>
+
+  <div class="result-box" id="attendanceResult" aria-live="polite">
+    Enter your semester details to check your attendance.
+  </div>
+</article>
+
+
+      <article class="panel" id="assignments">
+        <div class="panel-heading">
+          <div><p class="eyebrow">STAY ON TRACK</p><h2>Assignment Manager</h2></div>
+          <span class="panel-icon orange">▤</span>
+        </div>
+        <form id="assignmentForm" class="stack-form">
+          <label>Assignment name
+            <input type="text" id="assignmentName" maxlength="120" placeholder="e.g. Python assignment" required>
+          </label>
+          <label>Due date
+            <input type="date" id="assignmentDate" required>
+          </label>
+          <button class="btn btn-primary" type="submit">+ Add assignment</button>
+        </form>
+        <div class="list-toolbar">
+          <input type="search" id="assignmentSearch" placeholder="Search assignments..." aria-label="Search assignments">
+          <select id="assignmentFilter" aria-label="Filter assignments">
+            <option value="all">All tasks</option>
+            <option value="pending">Pending</option>
+            <option value="completed">Completed</option>
+          </select>
+        </div>
+        <ul class="item-list" id="assignmentList"></ul>
+      </article>
+
+      <article class="panel" id="expenses">
+        <div class="panel-heading">
+          <div><p class="eyebrow">MONEY MANAGEMENT</p><h2>Expense Tracker</h2></div>
+          <span class="panel-icon green">₹</span>
+        </div>
+        <div class="expense-total">
+          <span>Total recorded expenses</span>
+          <strong id="expenseTotal">₹0</strong>
+        </div>
+        <form id="expenseForm" class="stack-form">
+          <label>Expense name
+            <input type="text" id="expenseName" maxlength="100" placeholder="e.g. Mess, travel" required>
+          </label>
+          <div class="form-grid">
+            <label>Amount (₹)
+              <input type="number" id="expenseAmount" min="0.01" step="0.01" placeholder="150" required>
+            </label>
+            <label>Category
+              <select id="expenseCategory" required>
+                <option value="Food">Food</option>
+                <option value="Travel">Travel</option>
+                <option value="Study">Study</option>
+                <option value="Shopping">Shopping</option>
+                <option value="Bills">Bills</option>
+                <option value="Other">Other</option>
+              </select>
+            </label>
+          </div>
+          <label>Date
+            <input type="date" id="expenseDate" required>
+          </label>
+          <button class="btn btn-primary" type="submit">+ Add expense</button>
+        </form>
+        <div class="chart-wrap"><canvas id="expenseChart" aria-label="Expenses by category"></canvas></div>
+        <h3 class="list-title">Recent expenses</h3>
+        <ul class="item-list" id="expenseList"></ul>
+      </article>
+
+      <article class="panel" id="study">
+        <div class="panel-heading">
+          <div><p class="eyebrow">BUILD YOUR SKILLS</p><h2>Study Planner</h2></div>
+          <span class="panel-icon blue">◉</span>
+        </div>
+        <form id="studyForm" class="stack-form">
+          <label>Study task
+            <input type="text" id="studyName" maxlength="120" placeholder="e.g. Python practice" required>
+          </label>
+          <div class="form-grid">
+            <label>Date
+              <input type="date" id="studyDate" required>
+            </label>
+            <label>Duration (minutes)
+              <input type="number" id="studyDuration" min="1" max="1440" step="1" placeholder="60" required>
+            </label>
+          </div>
+          <button class="btn btn-primary" type="submit">+ Add study task</button>
+        </form>
+        <div class="study-insight">
+          <span class="insight-icon">✦</span>
+          <div><strong id="studyInsightTitle">One session at a time</strong><p id="studyInsightText">Record your study sessions to see your progress.</p></div>
+        </div>
+        <h3 class="list-title">Study sessions</h3>
+        <ul class="item-list" id="studyList"></ul>
+      </article>
+    </section>
+
+    <footer class="page-footer">
+      <span>Student Life Solver</span>
+      <span>Your data stays in this browser on this device.</span>
+    </footer>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  </main>
+</body>
+</html>
